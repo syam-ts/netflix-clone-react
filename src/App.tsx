@@ -1,5 +1,5 @@
 import "./App.css";
-import Row from "./Row.tsx";
+import Row from "../Components/Row.tsx";
 import request from "./request.ts";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <Row 
       title="Netflix Originals"
        fetchUrl={request.fetchNetflixOriginals} 
-       isLargeRow={true}
+       isLargeRow
        />
       <Row title="Trending" fetchUrl={request.fetchTreding} isLargeRow={false} />
       <Row title="Top Rated" fetchUrl={request.fetchTopRated} isLargeRow={false} />
