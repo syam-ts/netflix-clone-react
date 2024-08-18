@@ -1,17 +1,18 @@
 import "./App.css";
 import Row from "../Components/Row.tsx";
 import request from "./request.ts";
+import Banner from '../Components/Banner.tsx'
 
 function App() {
   return (
     <div className="App">
-      <h1>Netflix-clone</h1>
+      <Banner />
       <Row 
       title="Netflix Originals"
        fetchUrl={request.fetchNetflixOriginals} 
        isLargeRow
        />
-      <Row title="Trending" fetchUrl={request.fetchTreding} isLargeRow={false} />
+      <Row title="Trending" fetchUrl={request.fetchTrending} isLargeRow={false} />
       <Row title="Top Rated" fetchUrl={request.fetchTopRated} isLargeRow={false} />
       <Row title="Action Movies" fetchUrl={request.fetchActionMovies} isLargeRow={false} />
       <Row title="Horror Movies" fetchUrl={request.fetchHorrorMovies} isLargeRow={false} />
