@@ -5,10 +5,10 @@ import Banner from '../Components/Banner.tsx'
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <Banner />
       <Row 
-      title="Netflix Originals"
+      title="NETFLIX ORIGINALS"
        fetchUrl={request.fetchNetflixOriginals} 
        isLargeRow
        />
