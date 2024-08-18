@@ -6,16 +6,18 @@ const base_url = "https://image.tmdb.org/t/p/original/"
 
 interface RowProps {
     title: string,
-    fetchUrl: {}
+    fetchUrl: {},
+    isLargeRow: boolean
 }
 
 interface Movie {
     id: number, 
     name: string,
-    poster_path: string
+    poster_path: string,
+    backdrop_path: string
 }
 
-const Row: React.FC<RowProps> = ({ title, fetchUrl }) => {
+const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
 
     const [movies, setMovies] = useState<Movie []>([])
 
@@ -42,7 +44,7 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl }) => {
                     <img
                     key={movie.id}
                     className="row_poster"
-                        src={`${base_url}${movie.poster_path}`} alt={movie.name}  />
+                        src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} alt={movie.name}  />
                 ))}
             </div>
         </div>
