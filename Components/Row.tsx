@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import axios from '../src/axios.ts'
 import '../public/style/row.css'
 import YouTube from 'react-youtube'
-import movieTrailer from 'movie-trailer'
+import movieTrailer from 'movie-trailer';
 
+ 
 const base_url = "https://image.tmdb.org/t/p/original/"
 
 interface RowProps {
@@ -24,7 +25,7 @@ interface Movie {
 const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
 
     var [movies, setMovies] = useState<Movie []>([])
-    const [trailerUrl, setTrailerUrl] = useState(" ")
+    const [trailerUrl, setTrailerUrl] = useState("")
 
     useEffect: React.useEffect(() => {
         async function fetchData() {
@@ -47,7 +48,7 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
 
     const handleClick = (movie: Movie) => {
         if (trailerUrl) {
-            setTrailerUrl('');
+            setTrailerUrl("");
         } else {
             const movieName = movie.name || movie.title || movie.original_name || "";
             movieTrailer(movieName)
@@ -77,7 +78,8 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
                         src={`${base_url}${isLargeRow ? 
                             movie.poster_path : 
                             movie.backdrop_path}`} 
-                            alt={movie.name}  />
+                            alt={movie.name}  
+                            />
                    ))}
             </div>
            {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
