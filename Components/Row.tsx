@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from '../src/axios.ts'
 import '../public/style/row.css'
 import YouTube from 'react-youtube'
+import movieTrailer from 'movie-trailer'
 
 const base_url = "https://image.tmdb.org/t/p/original/"
 
@@ -12,15 +13,18 @@ interface RowProps {
 }
 
 interface Movie {
-    id: number, 
-    name: string,
-    poster_path: string,
-    backdrop_path: string
+    id: number;
+    name?: string;
+    title?: string;
+    original_name?: string;
+    poster_path: string;
+    backdrop_path: string;
 }
 
 const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
 
     var [movies, setMovies] = useState<Movie []>([])
+    const [trailerUrl, setTrailerUrl] = useState(" ")
 
     useEffect: React.useEffect(() => {
         async function fetchData() {
@@ -41,6 +45,22 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
         }
     }
 
+    const handleClick = (movie: Movie) => {
+        if (trailerUrl) {
+            setTrailerUrl('');
+        } else {
+            const movieName = movie.name || movie.title || movie.original_name || "";
+            movieTrailer(movieName)
+                .then((url: string) => {
+                    const urlParams = new URLSearchParams(new URL(url).search);
+                    setTrailerUrl(urlParams.get('v') ?? '');
+                })
+                .catch((error: any) => {
+                    console.error('Error fetching trailer:', error);
+                });
+        }
+    };
+
     // console.log(movies)
 
     return (
@@ -52,6 +72,7 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
                 {movies.map(movie => (
                     <img
                     key={movie.id}
+                    onClick={() => handleClick(movie)}
                     className={`row_poster ${isLargeRow && "row_posterLarge"}`}
                         src={`${base_url}${isLargeRow ? 
                             movie.poster_path : 
@@ -59,7 +80,7 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
                             alt={movie.name}  />
                    ))}
             </div>
-            <YouTube videoId={trailerUrl} opts={opts} />
+           {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
         </div>
     )
 }
