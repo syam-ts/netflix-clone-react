@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from '../src/axios.ts'
 import '../public/style/row.css'
+import YouTube from 'react-youtube'
 
 const base_url = "https://image.tmdb.org/t/p/original/"
 
@@ -31,6 +32,15 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
         fetchData()
     }, [fetchUrl])
 
+    const opts = {
+        height: "390",
+        width: "100%",
+        playerVars: {
+
+            autoplay: 1
+        }
+    }
+
     // console.log(movies)
 
     return (
@@ -49,8 +59,9 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl , isLargeRow }) => {
                             alt={movie.name}  />
                    ))}
             </div>
+            <YouTube videoId={trailerUrl} opts={opts} />
         </div>
     )
 }
-
+                                      
 export default Row
